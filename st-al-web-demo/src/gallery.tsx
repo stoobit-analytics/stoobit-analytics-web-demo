@@ -5,7 +5,7 @@ import { GalleryView } from "@/components/gallery-view"
 import { FolderView } from "@/components/folder-view"
 import { ImageDialog } from "@/components/image-dialog"
 import { galleryData, type GalleryFolder, type GalleryImage } from "./data/gallery-data"
-import { categoryOpened, categoryTime } from "./AnalyticsCalls"
+import { categoryOpened, categoryTime, imageOpened } from "./AnalyticsCalls"
 
 export default function Gallery() {
   const [folders, setFolders] = useState(galleryData)
@@ -29,6 +29,8 @@ export default function Gallery() {
   }
 
   const handleImageClick = (image: GalleryImage) => {
+    console.log(image.title)
+    imageOpened(image.title, currentFolder?.name)
     setSelectedImage(image)
     setIsDialogOpen(true)
   }

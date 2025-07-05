@@ -16,13 +16,6 @@ interface ImageDialogProps {
 export function ImageDialog({ image, isOpen, onClose, onLike }: ImageDialogProps) {
   if (!image) return null
 
-  useEffect(() => {
-    if (isOpen) {
-      imageOpened(image.title)
-    }
-  }, [isOpen]
-  );
-
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl w-full p-0">

@@ -1,14 +1,14 @@
 
 const API_URL: string = "https://analyticsapi.stoobit.com/track";
 const API_KEY: string = "588f7d5dc6066771076f3fe8c60a42a4";
-export function imageOpened(title: string) {
+export function imageOpened(title: string, category: string) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
         id: new Date().getMilliseconds().toString(),
         name: "image opened",
         defaultprops: { os: os.os, userid: userid, os_version: os.version},
-        customprops: {title: title},
+        customprops: {title: title, category: category},
         time: new Date().toISOString()
     };
     fetch(
