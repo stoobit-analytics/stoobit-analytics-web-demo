@@ -20,7 +20,8 @@ export function GalleryView({ folders, onFolderClick }: GalleryViewProps) {
           <Card
             key={folder.id}
             className="group cursor-pointer overflow-hidden hover:shadow-lg transition-shadow"
-            onClick={() => onFolderClick(folder)}
+            onClick={() => {
+              onFolderClick(folder)}}
           >
             <CardContent className="p-0">
               <div className="relative aspect-square overflow-hidden">

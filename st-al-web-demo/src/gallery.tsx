@@ -5,19 +5,27 @@ import { GalleryView } from "@/components/gallery-view"
 import { FolderView } from "@/components/folder-view"
 import { ImageDialog } from "@/components/image-dialog"
 import { galleryData, type GalleryFolder, type GalleryImage } from "./data/gallery-data"
+import { categoryOpened, categoryTime } from "./AnalyticsCalls"
 
 export default function Gallery() {
   const [folders, setFolders] = useState(galleryData)
   const [currentFolder, setCurrentFolder] = useState<GalleryFolder | null>(null)
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [openTimeFolder, setOpenTimeFolder] = useState<Date | null>(null)
 
   const handleFolderClick = (folder: GalleryFolder) => {
+    setOpenTimeFolder(new Date())
+    categoryOpened(folder.name)
     setCurrentFolder(folder)
   }
 
   const handleBackToGallery = () => {
     setCurrentFolder(null)
+
+    var diff = ((new Date()) - openTimeFolder)
+    categoryTime(diff/1000)
+    setOpenTimeFolder(null)
   }
 
   const handleImageClick = (image: GalleryImage) => {

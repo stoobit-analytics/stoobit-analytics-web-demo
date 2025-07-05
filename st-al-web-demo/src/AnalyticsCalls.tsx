@@ -24,6 +24,75 @@ export function imageOpened(title: string) {
     )
 }
 
+export function imageLiked(title: string) {
+    var userid = generateAndGetUserId()
+    var os = detectOS()
+    const body = {
+        id: new Date().getMilliseconds().toString(),
+        name: "image liked",
+        defaultprops: { os: os.os, userid: userid, os_version: os.version},
+        customprops: {title: title},
+        time: new Date().toISOString()
+    };
+    fetch(
+        API_URL,
+        {
+            method: "POST",
+            body: JSON.stringify([body]),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": API_KEY
+            },
+        }
+    )
+}
+
+export function categoryOpened(title: string) {
+    var userid = generateAndGetUserId()
+    var os = detectOS()
+    const body = {
+        id: new Date().getMilliseconds().toString(),
+        name: "category opened",
+        defaultprops: { os: os.os, userid: userid, os_version: os.version},
+        customprops: {title: title},
+        time: new Date().toISOString()
+    };
+    fetch(
+        API_URL,
+        {
+            method: "POST",
+            body: JSON.stringify([body]),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": API_KEY
+            },
+        }
+    )
+}
+
+export function categoryTime(time: string) {
+    var userid = generateAndGetUserId()
+    var os = detectOS()
+    const body = {
+        id: new Date().getMilliseconds().toString(),
+        name: "category length of stay",
+        defaultprops: { os: os.os, userid: userid, os_version: os.version},
+        customprops: {duration: time},
+        time: new Date().toISOString()
+    };
+    fetch(
+        API_URL,
+        {
+            method: "POST",
+            body: JSON.stringify([body]),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": API_KEY
+            },
+        }
+    )
+}
+
 function generateAndGetUserId() {
     var userid = localStorage.getItem("userid");
     if (userid === null) {
