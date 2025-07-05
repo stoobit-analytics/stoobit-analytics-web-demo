@@ -3,6 +3,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Heart, X } from "lucide-react"
 import type { GalleryImage } from "@/data/gallery-data"
+import { useEffect } from "react"
+import { imageOpened } from "../AnalyticsCalls"
 
 interface ImageDialogProps {
   image: GalleryImage | null
@@ -13,6 +15,13 @@ interface ImageDialogProps {
 
 export function ImageDialog({ image, isOpen, onClose, onLike }: ImageDialogProps) {
   if (!image) return null
+
+  useEffect(() => {
+    if (isOpen) {
+      imageOpened(image.title)
+    }
+  }, [isOpen]
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -28,12 +37,12 @@ export function ImageDialog({ image, isOpen, onClose, onLike }: ImageDialogProps
           </Button>
 
           <div className="relative aspect-video">
-<img
+            <img
               src={image.src || "/placeholder.svg"}
               alt={image.title}
               className="w-full h-full object-cover rounded-t-lg"
             />
-                      </div>
+          </div>
 
           <div className="p-6">
             <div className="flex items-center justify-between">
@@ -44,9 +53,8 @@ export function ImageDialog({ image, isOpen, onClose, onLike }: ImageDialogProps
 
               <Button variant="ghost" size="icon" onClick={() => onLike(image.id)} className="hover:bg-red-50">
                 <Heart
-                  className={`h-5 w-5 ${
-                    image.isLiked ? "fill-red-500 text-red-500" : "text-muted-foreground hover:text-red-500"
-                  }`}
+                  className={`h-5 w-5 ${image.isLiked ? "fill-red-500 text-red-500" : "text-muted-foreground hover:text-red-500"
+                    }`}
                 />
               </Button>
             </div>
