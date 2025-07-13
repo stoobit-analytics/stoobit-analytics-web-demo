@@ -5,7 +5,7 @@ import { GalleryView } from "@/components/gallery-view"
 import { FolderView } from "@/components/folder-view"
 import { ImageDialog } from "@/components/image-dialog"
 import { galleryData, type GalleryFolder, type GalleryImage } from "./data/gallery-data"
-import { categoryOpened, categoryTime, imageOpened } from "./AnalyticsCalls"
+import { categoryOpened, categoryTime, imageLiked, imageOpened } from "./AnalyticsCalls"
 
 export default function Gallery() {
   const [folders, setFolders] = useState(galleryData)
@@ -40,7 +40,8 @@ export default function Gallery() {
     setSelectedImage(null)
   }
 
-  const handleLike = (imageId: string) => {
+  const handleLike = (imageId: string, title: string | undefined, folder: string | undefined,) => {
+    imageLiked(title, folder)
     setFolders((prevFolders) =>
       prevFolders.map((folder) => ({
         ...folder,
@@ -90,13 +91,13 @@ export default function Gallery() {
             folder={currentFolder}
             onBack={handleBackToGallery}
             onImageClick={handleImageClick}
-            onLike={handleLike}
+            onLike={(id: string) => handleLike(id, selectedImage?.title, currentFolder?.name)}
           />
         ) : (
           <GalleryView folders={folders} onFolderClick={handleFolderClick} />
         )}
 
-        <ImageDialog image={selectedImage} isOpen={isDialogOpen} onClose={handleCloseDialog} onLike={handleLike} />
+        <ImageDialog image={selectedImage} isOpen={isDialogOpen} onClose={handleCloseDialog} onLike={(id: string) => handleLike(id, selectedImage?.title, currentFolder?.name)} />
       </div>
     </div>
   )

@@ -24,14 +24,14 @@ export function imageOpened(title: string, category: string) {
     )
 }
 
-export function imageLiked(title: string) {
+export function imageLiked(title: string | undefined, folder: string | undefined,) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
         id: new Date().getMilliseconds().toString(),
         name: "image liked",
         defaultprops: { os: os.os, userid: userid, os_version: os.version},
-        customprops: {title: title},
+        customprops: {title: title, category: folder},
         time: new Date().toISOString()
     };
     fetch(
