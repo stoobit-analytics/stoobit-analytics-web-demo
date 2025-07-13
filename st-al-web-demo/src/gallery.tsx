@@ -21,10 +21,10 @@ export default function Gallery() {
   }
 
   const handleBackToGallery = () => {
-    setCurrentFolder(null)
 
-    var diff = ((new Date()) - openTimeFolder)
-    categoryTime(diff/1000)
+    var diff = ((new Date()) - (openTimeFolder))
+    categoryTime(diff/1000, currentFolder?.name)
+    setCurrentFolder(null)
     setOpenTimeFolder(null)
   }
 

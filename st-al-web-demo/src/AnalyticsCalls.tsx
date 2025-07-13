@@ -47,7 +47,7 @@ export function imageLiked(title: string | undefined, folder: string | undefined
     )
 }
 
-export function categoryOpened(title: string) {
+export function categoryOpened(title: string|undefined) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
@@ -70,14 +70,14 @@ export function categoryOpened(title: string) {
     )
 }
 
-export function categoryTime(time: string) {
+export function categoryTime(time: string, folder: string | undefined) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
         id: new Date().getMilliseconds().toString(),
         name: "category length of stay",
         defaultprops: { os: os.os, userid: userid, os_version: os.version},
-        customprops: {duration: time},
+        customprops: {duration: time, category: folder},
         time: new Date().toISOString()
     };
     fetch(
