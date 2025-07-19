@@ -22,15 +22,17 @@ export default function Gallery() {
 
   const handleBackToGallery = () => {
 
-    var diff = ((new Date()) - (openTimeFolder))
-    categoryTime(diff/1000, currentFolder?.name)
+    if (openTimeFolder) {
+      const diff = (new Date().getTime() - openTimeFolder.getTime())
+      categoryTime((diff / 1000).toString(), currentFolder?.name)
+    }
     setCurrentFolder(null)
     setOpenTimeFolder(null)
   }
 
   const handleImageClick = (image: GalleryImage) => {
     console.log(image.title)
-    imageOpened(image.title, currentFolder?.name)
+    imageOpened(image.title, currentFolder!.name)
     setSelectedImage(image)
     setIsDialogOpen(true)
   }

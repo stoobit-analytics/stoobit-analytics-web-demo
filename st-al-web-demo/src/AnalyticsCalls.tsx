@@ -7,8 +7,8 @@ export function imageOpened(title: string, category: string) {
     const body = {
         id: new Date().getMilliseconds().toString(),
         name: "image opened",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version},
-        customprops: {title: title, category: category},
+        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        customprops: { title: title, category: category },
         time: new Date().toISOString()
     };
     fetch(
@@ -30,8 +30,8 @@ export function imageLiked(title: string | undefined, folder: string | undefined
     const body = {
         id: new Date().getMilliseconds().toString(),
         name: "image liked",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version},
-        customprops: {title: title, category: folder},
+        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        customprops: { title: title, category: folder },
         time: new Date().toISOString()
     };
     fetch(
@@ -47,14 +47,14 @@ export function imageLiked(title: string | undefined, folder: string | undefined
     )
 }
 
-export function categoryOpened(title: string|undefined) {
+export function categoryOpened(title: string | undefined) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
         id: new Date().getMilliseconds().toString(),
         name: "category opened",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version},
-        customprops: {title: title},
+        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        customprops: { title: title },
         time: new Date().toISOString()
     };
     fetch(
@@ -76,8 +76,8 @@ export function categoryTime(time: string, folder: string | undefined) {
     const body = {
         id: new Date().getMilliseconds().toString(),
         name: "category length of stay",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version},
-        customprops: {duration: time, category: folder},
+        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        customprops: { duration: time, category: folder },
         time: new Date().toISOString()
     };
     fetch(
@@ -103,27 +103,35 @@ function generateAndGetUserId() {
 }
 
 function detectOS() {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  let os = "unknown";
-  let version = "unknown";
+    const userAgent = navigator.userAgent;
+    let os = "unknown";
+    let version = "unknown";
 
-  // iOS-Erkennung
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    os = "iOS";
-    const versionMatch = userAgent.match(/OS (\d+)_?(\d+)?_?(\d+)?/);
-    if (versionMatch) {
-      version = versionMatch.slice(1).filter(Boolean).join('.');
+    // iOS-Erkennung
+    if (/iPhone/.test(userAgent)) {
+        os = "iOS";
+        const versionMatch = userAgent.match(/OS (\d+)_?(\d+)?_?(\d+)?/);
+        if (versionMatch) {
+            version = versionMatch.slice(1).filter(Boolean).join('.');
+        }
     }
-  }
 
-  // Android-Erkennung
-  else if (/android/i.test(userAgent)) {
-    os = "Android";
-    const versionMatch = userAgent.match(/Android\s([0-9\.]+)/);
-    if (versionMatch) {
-      version = versionMatch[1];
+    if (/iPad/.test(userAgent)) {
+        os = "iPadOS";
+        const versionMatch = userAgent.match(/OS (\d+)_?(\d+)?_?(\d+)?/);
+        if (versionMatch) {
+            version = versionMatch.slice(1).filter(Boolean).join('.');
+        }
     }
-  }
 
-  return { os, version };
+    // Android-Erkennung
+    else if (/android/i.test(userAgent)) {
+        os = "Android";
+        const versionMatch = userAgent.match(/Android\s([0-9\.]+)/);
+        if (versionMatch) {
+            version = versionMatch[1];
+        }
+    }
+
+    return { os, version };
 }
