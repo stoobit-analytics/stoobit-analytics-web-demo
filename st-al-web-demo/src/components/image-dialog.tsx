@@ -3,8 +3,6 @@ import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Heart, X } from "lucide-react"
 import type { GalleryImage } from "@/data/gallery-data"
-import { useEffect } from "react"
-import { imageOpened } from "../AnalyticsCalls"
 
 interface ImageDialogProps {
   image: GalleryImage | null

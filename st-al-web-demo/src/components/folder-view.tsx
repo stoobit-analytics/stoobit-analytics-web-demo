@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Heart } from "lucide-react";
@@ -12,29 +11,6 @@ interface FolderViewProps {
 }
 
 export function FolderView({ folder, onBack, onImageClick, onLike }: FolderViewProps) {
-  // State to track when the folder was opened
-  const [openTime, setOpenTime] = useState<number | null>(null);
-  const [closeTime, setCloseTime] = useState<number | null>(null);
-
-  // Set open time when the component mounts
-  useEffect(() => {
-    setOpenTime(Date.now()); // Time when the folder is opened
-
-    // Clean up when the component unmounts or when the user navigates away
-    return () => {
-      setCloseTime(Date.now()); // Time when the folder is closed or the user leaves
-      
-    };
-  }, []);
-
-  // Calculate the time difference (duration) in seconds
-  const calculateOpenDuration = () => {
-    if (openTime && closeTime) {
-      return Math.round((closeTime - openTime) / 1000); // Convert from milliseconds to seconds
-    }
-    return 0; // If times are not set, return 0
-  };
-
   return (
     <div className="space-y-6 w-full">
       <div className="flex items-center gap-4">
