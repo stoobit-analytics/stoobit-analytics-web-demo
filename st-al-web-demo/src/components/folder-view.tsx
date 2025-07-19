@@ -1,16 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Heart } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import type { GalleryFolder, GalleryImage } from "@/data/gallery-data";
 
 interface FolderViewProps {
   folder: GalleryFolder;
   onBack: () => void;
   onImageClick: (image: GalleryImage) => void;
-  onLike: (imageId: string) => void;
 }
 
-export function FolderView({ folder, onBack, onImageClick, onLike }: FolderViewProps) {
+export function FolderView({ folder, onBack, onImageClick }: FolderViewProps) {
   return (
     <div className="space-y-4 w-full">
       <div className="text-center">
@@ -34,24 +33,7 @@ export function FolderView({ folder, onBack, onImageClick, onLike }: FolderViewP
                 <div className="flex items-center justify-between">
                   <div className="min-w-0 flex-1">
                     <h3 className="font-medium truncate">{image.title}</h3>
-                    <p className="text-sm text-muted-foreground">{image.likes} likes</p>
                   </div>
-
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onLike(image.id);
-                    }}
-                    className="shrink-0 hover:bg-red-50"
-                  >
-                    <Heart
-                      className={`h-4 w-4 ${
-                        image.isLiked ? "fill-red-500 text-red-500" : "text-muted-foreground hover:text-red-500"
-                      }`}
-                    />
-                  </Button>
                 </div>
               </div>
             </CardContent>

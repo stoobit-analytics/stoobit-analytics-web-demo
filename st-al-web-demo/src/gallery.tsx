@@ -19,16 +19,36 @@ export default function Gallery() {
     const handlePopState = () => {
       const urlParams = new URLSearchParams(window.location.search)
       const folderId = urlParams.get('folder')
+      const imageId = urlParams.get('image')
       
-      if (folderId) {
+      if (imageId && currentFolder) {
+        // Bild-Dialog öffnen
+        const image = currentFolder.images.find(img => img.id === imageId)
+        if (image && !isDialogOpen) {
+          setSelectedImage(image)
+          setIsDialogOpen(true)
+          imageOpened(image.title, currentFolder.name)
+        }
+      } else if (folderId && !imageId) {
+        // Nur Ordner öffnen
         const folder = galleryData.find(f => f.id === folderId)
         if (folder && !currentFolder) {
           setCurrentFolder(folder)
           setOpenTimeFolder(new Date())
         }
+        // Dialog schließen falls geöffnet
+        if (isDialogOpen) {
+          setIsDialogOpen(false)
+          setSelectedImage(null)
+        }
       } else {
+        // Zurück zur Hauptgalerie
         if (currentFolder) {
           handleBackToGallery()
+        }
+        if (isDialogOpen) {
+          setIsDialogOpen(false)
+          setSelectedImage(null)
         }
       }
     }
@@ -36,17 +56,28 @@ export default function Gallery() {
     // Initial URL check
     const urlParams = new URLSearchParams(window.location.search)
     const folderId = urlParams.get('folder')
+    const imageId = urlParams.get('image')
+    
     if (folderId) {
       const folder = galleryData.find(f => f.id === folderId)
       if (folder) {
         setCurrentFolder(folder)
         setOpenTimeFolder(new Date())
+        
+        if (imageId) {
+          const image = folder.images.find(img => img.id === imageId)
+          if (image) {
+            setSelectedImage(image)
+            setIsDialogOpen(true)
+            imageOpened(image.title, folder.name)
+          }
+        }
       }
     }
 
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
-  }, [currentFolder])
+  }, [currentFolder, isDialogOpen])
 
   // Scroll-Position zurücksetzen wenn sich die View ändert
   useEffect(() => {
@@ -83,11 +114,22 @@ export default function Gallery() {
     imageOpened(image.title, currentFolder!.name)
     setSelectedImage(image)
     setIsDialogOpen(true)
+    
+    // URL aktualisieren mit Bild-Parameter
+    const url = new URL(window.location.href)
+    url.searchParams.set('folder', currentFolder!.id)
+    url.searchParams.set('image', image.id)
+    window.history.pushState({}, '', url)
   }
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false)
     setSelectedImage(null)
+    
+    // Bild-Parameter aus URL entfernen, Ordner behalten
+    const url = new URL(window.location.href)
+    url.searchParams.delete('image')
+    window.history.pushState({}, '', url)
   }
 
   const handleLike = (imageId: string, title: string | undefined, folder: string | undefined,) => {
@@ -141,13 +183,12 @@ export default function Gallery() {
             folder={currentFolder}
             onBack={handleBackToGallery}
             onImageClick={handleImageClick}
-            onLike={(id: string) => handleLike(id, selectedImage?.title, currentFolder?.name)}
           />
         ) : (
           <GalleryView folders={folders} onFolderClick={handleFolderClick} />
         )}
 
-        <ImageDialog image={selectedImage} isOpen={isDialogOpen} onClose={handleCloseDialog} onLike={(id: string) => handleLike(id, selectedImage?.title, currentFolder?.name)} />
+        <ImageDialog image={selectedImage} isOpen={isDialogOpen} onClose={handleCloseDialog} />
       </div>
     </div>
   )
