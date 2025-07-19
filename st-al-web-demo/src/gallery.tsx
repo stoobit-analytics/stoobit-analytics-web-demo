@@ -48,6 +48,11 @@ export default function Gallery() {
     return () => window.removeEventListener('popstate', handlePopState)
   }, [currentFolder])
 
+  // Scroll-Position zurücksetzen wenn sich die View ändert
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [currentFolder])
+
   const handleFolderClick = (folder: GalleryFolder) => {
     setOpenTimeFolder(new Date())
     categoryOpened(folder.name)
