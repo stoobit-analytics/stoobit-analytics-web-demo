@@ -5,10 +5,10 @@ import { GalleryView } from "@/components/gallery-view"
 import { FolderView } from "@/components/folder-view"
 import { ImageDialog } from "@/components/image-dialog"
 import { galleryData, type GalleryFolder, type GalleryImage } from "./data/gallery-data"
-import { categoryOpened, categoryTime, imageLiked, imageOpened } from "./AnalyticsCalls"
+import { categoryOpened, categoryTime, imageOpened } from "./AnalyticsCalls"
 
 export default function Gallery() {
-  const [folders, setFolders] = useState(galleryData)
+  const [folders] = useState(galleryData)
   const [currentFolder, setCurrentFolder] = useState<GalleryFolder | null>(null)
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -37,11 +37,12 @@ export default function Gallery() {
       
       if (imageId && currentFolder) {
         // Bild-Dialog öffnen
-        const image = currentFolder.images.find((img: any) => img.id === imageId)
+        const folder = currentFolder as GalleryFolder
+        const image = folder.images.find((img: GalleryImage) => img.id === imageId)
         if (image && !isDialogOpen) {
           setSelectedImage(image)
           setIsDialogOpen(true)
-          imageOpened(image.title, currentFolder.name)
+          imageOpened(image.title, folder.name)
         }
       } else if (folderId && !imageId) {
         // Nur Ordner öffnen
@@ -150,49 +151,6 @@ export default function Gallery() {
     const url = new URL(window.location.href)
     url.searchParams.delete('image')
     window.history.pushState({}, '', url)
-  }
-
-  const handleLike = (imageId: string, title: string | undefined, folder: string | undefined,) => {
-    imageLiked(title, folder)
-    setFolders((prevFolders) =>
-      prevFolders.map((folder) => ({
-        ...folder,
-        images: folder.images.map((image) =>
-          image.id === imageId
-            ? {
-                ...image,
-                isLiked: !image.isLiked,
-                likes: image.isLiked ? image.likes - 1 : image.likes + 1,
-              }
-            : image,
-        ),
-      })),
-    )
-
-    // Update current folder if we're viewing one
-    if (currentFolder) {
-      setCurrentFolder((prevFolder) => ({
-        ...prevFolder!,
-        images: prevFolder!.images.map((image) =>
-          image.id === imageId
-            ? {
-                ...image,
-                isLiked: !image.isLiked,
-                likes: image.isLiked ? image.likes - 1 : image.likes + 1,
-              }
-            : image,
-        ),
-      }))
-    }
-
-    // Update selected image if it's the one being liked
-    if (selectedImage && selectedImage.id === imageId) {
-      setSelectedImage((prevImage) => ({
-        ...prevImage!,
-        isLiked: !prevImage!.isLiked,
-        likes: prevImage!.isLiked ? prevImage!.likes - 1 : prevImage!.likes + 1,
-      }))
-    }
   }
 
   return (
