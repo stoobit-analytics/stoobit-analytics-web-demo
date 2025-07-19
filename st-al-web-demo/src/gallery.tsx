@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { GalleryView } from "@/components/gallery-view"
 import { FolderView } from "@/components/folder-view"
 import { ImageDialog } from "@/components/image-dialog"
@@ -14,20 +14,63 @@ export default function Gallery() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [openTimeFolder, setOpenTimeFolder] = useState<Date | null>(null)
 
+  // URL-Navigation unterstützen
+  useEffect(() => {
+    const handlePopState = () => {
+      const urlParams = new URLSearchParams(window.location.search)
+      const folderId = urlParams.get('folder')
+      
+      if (folderId) {
+        const folder = galleryData.find(f => f.id === folderId)
+        if (folder && !currentFolder) {
+          setCurrentFolder(folder)
+          setOpenTimeFolder(new Date())
+        }
+      } else {
+        if (currentFolder) {
+          handleBackToGallery()
+        }
+      }
+    }
+
+    // Initial URL check
+    const urlParams = new URLSearchParams(window.location.search)
+    const folderId = urlParams.get('folder')
+    if (folderId) {
+      const folder = galleryData.find(f => f.id === folderId)
+      if (folder) {
+        setCurrentFolder(folder)
+        setOpenTimeFolder(new Date())
+      }
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [currentFolder])
+
   const handleFolderClick = (folder: GalleryFolder) => {
     setOpenTimeFolder(new Date())
     categoryOpened(folder.name)
     setCurrentFolder(folder)
+    
+    // URL aktualisieren
+    const url = new URL(window.location.href)
+    url.searchParams.set('folder', folder.id)
+    window.history.pushState({}, '', url)
   }
 
   const handleBackToGallery = () => {
-
     if (openTimeFolder) {
       const diff = (new Date().getTime() - openTimeFolder.getTime())
       categoryTime((diff / 1000).toString(), currentFolder?.name)
     }
     setCurrentFolder(null)
     setOpenTimeFolder(null)
+    
+    // URL zurücksetzen
+    const url = new URL(window.location.href)
+    url.searchParams.delete('folder')
+    window.history.pushState({}, '', url.pathname + (url.search ? url.search : ''))
   }
 
   const handleImageClick = (image: GalleryImage) => {
