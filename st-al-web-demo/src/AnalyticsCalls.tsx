@@ -1,6 +1,6 @@
 
 const API_URL: string = "https://analyticsapi.stoobit.com/track";
-const API_KEY: string = "588f7d5dc6066771076f3fe8c60a42a4";
+const API_KEY: string = "d72c56481f07151c0b4d666fcc76cdd8";
 export function imageOpened(title: string, category: string) {
     var userid = generateAndGetUserId()
     var os = detectOS()

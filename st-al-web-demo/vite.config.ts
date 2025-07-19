@@ -14,11 +14,11 @@ export default defineConfig({
   server: {
     host: '0.0.0.0', // Allow external access
     port: 5173,
-    allowedHosts: ['demo.stoobit.com', 'stoobit.com'],
+    allowedHosts: ['gallery.stoobit.com', 'stoobit.com'],
   },
   preview: {
     host: '0.0.0.0', // Allow external access
     port: 5173,
-    allowedHosts: ['demo.stoobit.com', 'stoobit.com'],
+    allowedHosts: ['gallery.stoobit.com', 'stoobit.com'],
   },
 })
