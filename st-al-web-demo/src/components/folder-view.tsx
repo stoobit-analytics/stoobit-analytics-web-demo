@@ -13,13 +13,12 @@ interface FolderViewProps {
 export function FolderView({ folder, onBack, onImageClick, onLike }: FolderViewProps) {
   return (
     <div className="space-y-6 w-full">
-      <div className="flex items-center gap-4">
+      <div className="space-y-4">
         <Button variant="ghost" onClick={onBack} className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" />
           Back to Gallery
         </Button>
-        <h1 className="text-3xl font-bold">{folder.name}</h1>
-        <span className="text-muted-foreground">({folder.images.length} images)</span>
+        <h1 className="text-4xl font-bold text-center">{folder.name}</h1>
       </div>
 
 
