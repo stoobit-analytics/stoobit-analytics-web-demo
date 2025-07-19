@@ -12,7 +12,7 @@ interface FolderViewProps {
 
 export function FolderView({ folder, onBack, onImageClick, onLike }: FolderViewProps) {
   return (
-    <div className="space-y-6 w-full">
+    <div className="space-y-4 w-full">
       <div className="space-y-4">
         <Button variant="ghost" onClick={onBack} className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" />
