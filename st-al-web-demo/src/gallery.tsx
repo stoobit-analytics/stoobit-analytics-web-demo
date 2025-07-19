@@ -16,14 +16,28 @@ export default function Gallery() {
 
   // URL-Navigation unterstützen
   useEffect(() => {
-    const handlePopState = () => {
+    const handlePopState = (event: PopStateEvent) => {
+      // Wenn ein Bild geöffnet ist, nur das Bild schließen
+      if (isDialogOpen) {
+        event.preventDefault()
+        handleCloseDialog()
+        return
+      }
+      
+      // Wenn wir in einem Ordner sind (aber kein Bild offen), zur Galerie zurück
+      if (currentFolder) {
+        event.preventDefault()
+        handleBackToGallery()
+        return
+      }
+      
       const urlParams = new URLSearchParams(window.location.search)
       const folderId = urlParams.get('folder')
       const imageId = urlParams.get('image')
       
       if (imageId && currentFolder) {
         // Bild-Dialog öffnen
-        const image = currentFolder.images.find(img => img.id === imageId)
+        const image = currentFolder.images.find((img: any) => img.id === imageId)
         if (image && !isDialogOpen) {
           setSelectedImage(image)
           setIsDialogOpen(true)
@@ -100,12 +114,18 @@ export default function Gallery() {
       const diff = (new Date().getTime() - openTimeFolder.getTime())
       categoryTime((diff / 1000).toString(), currentFolder?.name)
     }
+    
+    // Dialog schließen und zurücksetzen
+    setIsDialogOpen(false)
+    setSelectedImage(null)
+    
     setCurrentFolder(null)
     setOpenTimeFolder(null)
     
     // URL zurücksetzen
     const url = new URL(window.location.href)
     url.searchParams.delete('folder')
+    url.searchParams.delete('image')
     window.history.pushState({}, '', url.pathname + (url.search ? url.search : ''))
   }
 
