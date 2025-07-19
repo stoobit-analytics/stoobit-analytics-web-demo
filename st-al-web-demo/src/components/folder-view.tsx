@@ -13,14 +13,9 @@ interface FolderViewProps {
 export function FolderView({ folder, onBack, onImageClick, onLike }: FolderViewProps) {
   return (
     <div className="space-y-4 w-full">
-      <div className="space-y-4">
-        <Button variant="ghost" onClick={onBack} className="flex items-center gap-2">
-          <ArrowLeft className="h-4 w-4" />
-          Back to Gallery
-        </Button>
-        <h1 className="text-4xl font-bold text-center">{folder.name}</h1>
+      <div className="text-center">
+        <h1 className="text-4xl font-bold">{folder.name}</h1>
       </div>
-
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
         {folder.images.map((image) => (
@@ -62,6 +57,13 @@ export function FolderView({ folder, onBack, onImageClick, onLike }: FolderViewP
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      <div className="flex justify-center mt-8">
+        <Button variant="outline" onClick={onBack} className="flex items-center gap-2">
+          <ArrowLeft className="h-4 w-4" />
+          Back to Gallery
+        </Button>
       </div>
     </div>
   );
