@@ -8,7 +8,7 @@ export function imageOpened(title: string, category: string) {
         id: new Date().getMilliseconds().toString(),
         name: "Bild geöffnet",
         defaultprops: { os: os.os, userid: userid, os_version: os.version },
-        customprops: { title: title, category: category },
+        customprops: { titel: title, sammlung: category },
         time: new Date().toISOString()
     };
     fetch(
@@ -52,9 +52,9 @@ export function categoryOpened(title: string | undefined) {
     var os = detectOS()
     const body = {
         id: new Date().getMilliseconds().toString(),
-        name: "Bild geöffnet",
+        name: "Sammlung geöffnet",
         defaultprops: { os: os.os, userid: userid, os_version: os.version },
-        customprops: { title: title },
+        customprops: { sammlung: title },
         time: new Date().toISOString()
     };
     fetch(
