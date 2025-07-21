@@ -44,7 +44,7 @@ export function FolderView({ folder, onBack, onImageClick }: FolderViewProps) {
       <div className="flex justify-center mt-8">
         <Button variant="outline" onClick={onBack} className="flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" />
-          Back to Gallery
+          Zurück zur Übersicht
         </Button>
       </div>
     </div>

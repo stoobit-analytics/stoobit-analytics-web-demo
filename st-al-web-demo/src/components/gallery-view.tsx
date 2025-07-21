@@ -11,8 +11,8 @@ export function GalleryView({ folders, onFolderClick }: GalleryViewProps) {
   return (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-4xl font-bold">Photo Gallery</h1>
-        <p className="text-muted-foreground">Explore our collection of beautiful images</p>
+        <h1 className="text-4xl font-bold">Galerie</h1>
+        <p className="text-muted-foreground">Entdecke unsere Sammlung beeindruckender Bilder.</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
