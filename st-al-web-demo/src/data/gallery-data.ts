@@ -15,7 +15,7 @@ export interface GalleryFolder {
 
 export const galleryData: GalleryFolder[] = [
   {
-    id: "nature",
+    id: "animals",
     name: "Tierwelt",
     thumbnail: "https://cdn.pixabay.com/photo/2021/08/08/22/19/redtail-hawk-6532079_1280.jpg",
     images: [
@@ -65,6 +65,62 @@ export const galleryData: GalleryFolder[] = [
         id: "nature-7",
         title: "Oktopus",
         src: "https://cdn.pixabay.com/photo/2018/03/26/13/40/nature-3262715_1280.jpg",
+        likes: 32,
+        isLiked: false,
+      },
+    ],
+  },
+  {
+    id: "plants",
+    name: "Pflanzenwelt",
+    thumbnail: "https://cdn.pixabay.com/photo/2021/03/22/11/40/bonsai-6114251_1280.jpg",
+    images: [
+      {
+        id: "nature-1",
+        title: "Mimose",
+        src: "https://cdn.pixabay.com/photo/2019/07/27/06/53/is-a-biennial-plant-4366056_1280.jpg",
+        likes: 24,
+        isLiked: false,
+      },
+      {
+        id: "nature-2",
+        title: "Lebende Steine",
+        src: "https://cdn.pixabay.com/photo/2021/03/25/09/32/living-stones-6122537_1280.jpg",
+        likes: 19,
+        isLiked: false,
+      },
+      {
+        id: "nature-3",
+        title: "Venusfliegenfalle",
+        src: "https://cdn.pixabay.com/photo/2016/07/20/21/39/venus-flytrap-1531345_1280.jpg",
+        likes: 21,
+        isLiked: false,
+      },
+      {
+        id: "nature-4",
+        title: "Baobab",
+        src: "https://cdn.pixabay.com/photo/2021/12/19/03/51/tree-6880117_1280.jpg",
+        likes: 44,
+        isLiked: false,
+      },
+      {
+        id: "nature-5",
+        title: "Stachelmoos",
+        src: "https://cdn.pixabay.com/photo/2021/08/20/16/48/selaginella-6560850_1280.jpg",
+        likes: 13,
+        isLiked: false,
+      },
+      {
+        id: "nature-6",
+        title: "Wunderblume",
+        src: "https://cdn.pixabay.com/photo/2025/06/05/17/53/flower-head-9643449_1280.jpg",
+        likes: 37,
+        isLiked: false,
+      },
+      {
+        id: "nature-7",
+        title: "Passionsblume",
+        src: "https://cdn.pixabay.com/photo/2019/08/18/13/23/nature-4414141_1280.jpg",
         likes: 32,
         isLiked: false,
       },
