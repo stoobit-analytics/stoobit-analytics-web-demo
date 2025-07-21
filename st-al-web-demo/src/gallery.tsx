@@ -42,7 +42,7 @@ export default function Gallery() {
         if (image && !isDialogOpen) {
           setSelectedImage(image)
           setIsDialogOpen(true)
-          imageOpened(image.title, folder.name)
+          // Kein Analytics Call bei Browser-Navigation
         }
       } else if (folderId && !imageId) {
         // Nur Ordner öffnen
@@ -84,7 +84,7 @@ export default function Gallery() {
           if (image) {
             setSelectedImage(image)
             setIsDialogOpen(true)
-            imageOpened(image.title, folder.name)
+            // Kein Analytics Call hier - nur bei direkten Klicks
           }
         }
       }
