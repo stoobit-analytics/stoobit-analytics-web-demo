@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 
 const API_URL: string = "https://analyticsapi.stoobit.com/track";
 const API_KEY: string = "d72c56481f07151c0b4d666fcc76cdd8";
@@ -5,9 +6,9 @@ export function imageOpened(title: string, category: string) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
-        id: new Date().getMilliseconds().toString(),
+        id: uuidv4(),
         name: "Bild geöffnet",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        defaultprops: { os: os.os, user_id: userid, os_version: os.version },
         customprops: { titel: title, sammlung: category },
         time: new Date().toISOString()
     };
@@ -28,9 +29,9 @@ export function imageLiked(title: string | undefined, folder: string | undefined
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
-        id: new Date().getMilliseconds().toString(),
+        id: uuidv4(),
         name: "image liked",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        defaultprops: { os: os.os, user_id: userid, os_version: os.version },
         customprops: { title: title, category: folder },
         time: new Date().toISOString()
     };
@@ -51,9 +52,9 @@ export function categoryOpened(title: string | undefined) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
-        id: new Date().getMilliseconds().toString(),
+        id: uuidv4(),
         name: "Sammlung geöffnet",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        defaultprops: { os: os.os, user_id: userid, os_version: os.version },
         customprops: { sammlung: title },
         time: new Date().toISOString()
     };
@@ -74,9 +75,9 @@ export function categoryTime(time: string, folder: string | undefined) {
     var userid = generateAndGetUserId()
     var os = detectOS()
     const body = {
-        id: new Date().getMilliseconds().toString(),
+        id: uuidv4(),
         name: "category length of stay",
-        defaultprops: { os: os.os, userid: userid, os_version: os.version },
+        defaultprops: { os: os.os, user_id: userid, os_version: os.version },
         customprops: { duration: time, category: folder },
         time: new Date().toISOString()
     };
@@ -96,7 +97,7 @@ export function categoryTime(time: string, folder: string | undefined) {
 function generateAndGetUserId() {
     var userid = localStorage.getItem("userid");
     if (userid === null) {
-        userid = new Date().getMilliseconds().toString()
+        userid = uuidv4()
         localStorage.setItem("userid", userid)
     }
     return userid
