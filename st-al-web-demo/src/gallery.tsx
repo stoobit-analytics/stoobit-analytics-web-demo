@@ -5,7 +5,7 @@ import { GalleryView } from "@/components/gallery-view"
 import { FolderView } from "@/components/folder-view"
 import { ImageDialog } from "@/components/image-dialog"
 import { galleryData, type GalleryFolder, type GalleryImage } from "./data/gallery-data"
-import { categoryOpened, categoryTime, imageOpened } from "./AnalyticsCalls"
+import { categoryOpened, imageOpened } from "./AnalyticsCalls"
 
 export default function Gallery() {
   const [folders] = useState(galleryData)
@@ -111,11 +111,6 @@ export default function Gallery() {
   }
 
   const handleBackToGallery = () => {
-    if (openTimeFolder) {
-      const diff = (new Date().getTime() - openTimeFolder.getTime())
-      categoryTime((diff / 1000).toString(), currentFolder?.name)
-    }
-    
     // Dialog schließen und zurücksetzen
     setIsDialogOpen(false)
     setSelectedImage(null)

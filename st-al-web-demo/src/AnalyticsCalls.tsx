@@ -25,29 +25,6 @@ export function imageOpened(title: string, category: string) {
     )
 }
 
-export function imageLiked(title: string | undefined, folder: string | undefined,) {
-    var userid = generateAndGetUserId()
-    var os = detectOS()
-    const body = {
-        id: uuidv4(),
-        name: "image liked",
-        defaultprops: { os: os.os, user_id: userid, os_version: os.version },
-        customprops: { title: title, category: folder },
-        time: new Date().toISOString()
-    };
-    fetch(
-        API_URL,
-        {
-            method: "POST",
-            body: JSON.stringify([body]),
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": API_KEY
-            },
-        }
-    )
-}
-
 export function categoryOpened(title: string | undefined) {
     var userid = generateAndGetUserId()
     var os = detectOS()
@@ -56,29 +33,6 @@ export function categoryOpened(title: string | undefined) {
         name: "Sammlung geöffnet",
         defaultprops: { os: os.os, user_id: userid, os_version: os.version },
         customprops: { sammlung: title },
-        time: new Date().toISOString()
-    };
-    fetch(
-        API_URL,
-        {
-            method: "POST",
-            body: JSON.stringify([body]),
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": API_KEY
-            },
-        }
-    )
-}
-
-export function categoryTime(time: string, folder: string | undefined) {
-    var userid = generateAndGetUserId()
-    var os = detectOS()
-    const body = {
-        id: uuidv4(),
-        name: "category length of stay",
-        defaultprops: { os: os.os, user_id: userid, os_version: os.version },
-        customprops: { duration: time, category: folder },
         time: new Date().toISOString()
     };
     fetch(
