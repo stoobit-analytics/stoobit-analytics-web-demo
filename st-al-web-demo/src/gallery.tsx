@@ -12,7 +12,6 @@ export default function Gallery() {
   const [currentFolder, setCurrentFolder] = useState<GalleryFolder | null>(null)
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [openTimeFolder, setOpenTimeFolder] = useState<Date | null>(null)
 
   // URL-Navigation unterstützen
   useEffect(() => {
