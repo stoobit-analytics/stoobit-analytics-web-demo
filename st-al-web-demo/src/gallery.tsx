@@ -48,7 +48,6 @@ export default function Gallery() {
         const folder = galleryData.find(f => f.id === folderId)
         if (folder && !currentFolder) {
           setCurrentFolder(folder)
-          setOpenTimeFolder(new Date())
         }
         // Dialog schließen falls geöffnet
         if (isDialogOpen) {
@@ -76,7 +75,6 @@ export default function Gallery() {
       const folder = galleryData.find(f => f.id === folderId)
       if (folder) {
         setCurrentFolder(folder)
-        setOpenTimeFolder(new Date())
         
         if (imageId) {
           const image = folder.images.find(img => img.id === imageId)
@@ -99,7 +97,6 @@ export default function Gallery() {
   }, [currentFolder])
 
   const handleFolderClick = (folder: GalleryFolder) => {
-    setOpenTimeFolder(new Date())
     categoryOpened(folder.name)
     setCurrentFolder(folder)
     
@@ -115,7 +112,6 @@ export default function Gallery() {
     setSelectedImage(null)
     
     setCurrentFolder(null)
-    setOpenTimeFolder(null)
     
     // URL zurücksetzen
     const url = new URL(window.location.href)
